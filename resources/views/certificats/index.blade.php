@@ -40,6 +40,9 @@
                             <td class="fw-semibold">{{ \Carbon\Carbon::parse($certificat->date_certificat)->format('d/m/Y') }}</td>
                             <td>{{ $certificat->habitant->nom }} {{ $certificat->habitant->prenom }}</td>
                             <td class="text-center">
+                                <a href="{{ route('certificats.show', $certificat->id) }}" class="btn btn-info btn-sm me-1" title="Visualiser">
+                                    <i class="bi bi-eye"></i> Voir
+                                </a>
                                 <a href="{{ route('certificats.edit', $certificat->id) }}" class="btn btn-warning btn-sm me-1">
                                     <i class="bi bi-pencil"></i> Modifier
                                 </a>
