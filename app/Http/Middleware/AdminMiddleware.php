@@ -15,9 +15,8 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {   
-        if (Auth::check() && Auth::user()->role === 'admin') {
-            abort(403, 'Accès refusé.');
-            
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
+            abort(403, 'Accès interdit. Seuls les administrateurs peuvent accéder à cette page.');
         }
         return $next($request);
     }

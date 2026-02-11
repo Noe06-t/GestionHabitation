@@ -4,21 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Habitant;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Middleware\AdminMiddleware;
-use App\Models\User;
-
 
 class HabitantController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         if(auth()->user()->role != 'admin') {
-            abort(403, 'Accès interdit');
-    }
+       
+    
         // cette partie affiche la liste de tous les habitants
         $habitants = Habitant::all();
         return view('habitants.index', compact('habitants'));
