@@ -1,15 +1,62 @@
-<h1>Modifier Habitant</h1>
+@extends('layouts.main')
 
-<form action="{{ route('habitants.update', $habitant->id) }}" method="POST">
-    @csrf
-    @method('PUT')
+@section('title', 'Modifier Habitant')
 
-    <input type="text" name="nom" value="{{ $habitant->nom }}"><br>
-    <input type="text" name="prenom" value="{{ $habitant->prenom }}"><br>
-    <input type="email" name="email" value="{{ $habitant->email }}"><br>
-    <input type="text" name="telephone" value="{{ $habitant->telephone }}"><br>
-    <input type="date" name="date_naissance" value="{{ $habitant->date_naissance }}"><br>
-    <input type="text" name="quartier" value="{{ $habitant->quartier }}"><br>
-
-    <button type="submit">Modifier</button>
-</form>
+@section('content')
+<div class="card">
+    <div class="card-header">
+        <h2><i class="bi bi-pencil-square"></i> Modifier Habitant</h2>
+    </div>
+    <div class="card-body p-4">
+        <form action="{{ route('habitants.update', $habitant->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="nom" class="form-label"><i class="bi bi-person"></i> Nom *</label>
+                    <input type="text" class="form-control" id="nom" name="nom" value="{{ $habitant->nom }}" required>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="prenom" class="form-label"><i class="bi bi-person"></i> Prénom *</label>
+                    <input type="text" class="form-control" id="prenom" name="prenom" value="{{ $habitant->prenom }}" required>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label"><i class="bi bi-envelope"></i> Email *</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ $habitant->email }}" required>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="telephone" class="form-label"><i class="bi bi-telephone"></i> Téléphone *</label>
+                    <input type="text" class="form-control" id="telephone" name="telephone" value="{{ $habitant->telephone }}" required>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="date_naissance" class="form-label"><i class="bi bi-calendar"></i> Date de naissance *</label>
+                    <input type="date" class="form-control" id="date_naissance" name="date_naissance" value="{{ $habitant->date_naissance }}" required>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="quartier" class="form-label"><i class="bi bi-geo-alt"></i> Quartier *</label>
+                    <input type="text" class="form-control" id="quartier" name="quartier" value="{{ $habitant->quartier }}" required>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ route('habitants.index') }}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Retour
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Modifier
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection

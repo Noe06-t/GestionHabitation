@@ -9,6 +9,7 @@ class HabitantController extends Controller
 {
     public function __construct()
     {
+        //Appliquer le middleware d'authentification et d'administration à toutes les méthodes de ce contrôleur
         $this->middleware('auth');
         $this->middleware('admin');
     }
