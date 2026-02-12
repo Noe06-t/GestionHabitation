@@ -10,6 +10,12 @@ class Certificat extends Model
     protected $fillable = [
         'date_certificat',
         'habitant_id',
+        'statut',
+        'transaction_id',
+    ];
+
+    protected $casts = [
+        'date_certificat' => 'date',
     ];
 
     public function habitant()

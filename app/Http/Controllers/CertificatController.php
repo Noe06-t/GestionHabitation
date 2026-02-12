@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Certificat;
 use App\Models\Habitant;
+use App\Services\PaydunyaService;
+
 class CertificatController extends Controller
 {
     /**
@@ -32,10 +34,20 @@ class CertificatController extends Controller
      */
     public function store(Request $request)
     {
-        //Eneregistrer un nouveau certificat
-        Certificat::create($request->all());
+        //Enregistrer un nouveau certificat avec statut en_attente
+        $request->validate([
+            'date_certificat' => 'required|date',
+            'habitant_id' => 'required|exists:habitants,id'
+        ]);
+
+        Certificat::create([
+            'date_certificat' => $request->date_certificat,
+            'habitant_id' => $request->habitant_id,
+            'statut' => 'en_attente'
+        ]);
+
         return redirect()->route('certificats.index')
-                         ->with('success', 'Certificat créé avec succès.'); 
+                         ->with('success', 'Certificat créé avec succès. L\'habitant peut maintenant se connecter pour effectuer le paiement.'); 
     }
 
     /**
@@ -71,8 +83,13 @@ class CertificatController extends Controller
      */
     public function destroy(Certificat $certificat)
     {
+        // Sauvegarder le nom de l'habitant pour le message
+        $habitantNom = $certificat->habitant->nom . ' ' . $certificat->habitant->prenom;
+        
+        // Supprimer uniquement le certificat (l'habitant reste intact)
         $certificat->delete();
+        
         return redirect()->route('certificats.index')
-                         ->with('success', 'Certificat supprimé avec succès.');
+                         ->with('success', "Certificat supprimé avec succès. L'habitant {$habitantNom} n'a pas été supprimé.");
     }
 }

@@ -38,10 +38,12 @@ Application web de gestion des habitants et de leurs certificats d'habitation, d
 
 ### Gestion des Certificats
 - ✅ Créer des certificats d'habitation pour les habitants
+- ✅ **Paiement en ligne via PayDunya** (5 000 FCFA)
 - ✅ Modifier les certificats existants
 - ✅ Supprimer des certificats
 - ✅ Associer un certificat à un habitant spécifique
 - ✅ Visualiser tous les certificats émis
+- ✅ Télécharger et imprimer les certificats (format officiel)
 
 ### Authentification et Sécurité
 - ✅ Système d'inscription et de connexion (Laravel Breeze)
@@ -213,6 +215,22 @@ QUEUE_CONNECTION=database
 BCRYPT_ROUNDS=12
 ```
 
+#### PayDunya (Paiement en ligne)
+```env
+PAYDUNYA_MASTER_KEY=votre_master_key
+PAYDUNYA_PUBLIC_KEY=votre_public_key
+PAYDUNYA_PRIVATE_KEY=votre_private_key
+PAYDUNYA_TOKEN=votre_token
+PAYDUNYA_MODE=test
+```
+
+**📌 Configuration PayDunya :**
+- Créez un compte sur [PayDunya](https://paydunya.com)
+- Récupérez vos clés API depuis le tableau de bord
+- En mode `test` : utilisez les clés de test (paiements simulés)
+- En mode `live` : utilisez les clés de production (paiements réels)
+- **Documentation complète** : Consultez [PAYDUNYA_CONFIG.md](PAYDUNYA_CONFIG.md)
+
 ## 📁 Structure du projet
 
 ```
@@ -226,10 +244,12 @@ GestionHabitation/
 │   │   ├── Middleware/
 │   │   │   └── AdminMiddleware.php      # Protection admin
 │   │   └── Requests/
-│   └── Models/
-│       ├── User.php                     # Modèle utilisateur
-│       ├── Habitant.php                 # Modèle habitant
-│       └── Certificat.php               # Modèle certificat
+│   ├── Models/
+│   │   ├── User.php                     # Modèle utilisateur
+│   │   ├── Habitant.php                 # Modèle habitant
+│   │   └── Certificat.php               # Modèle certificat
+│   └── Services/
+│       └── PaydunyaService.php          # Service de paiement
 ├── bootstrap/
 │   └── app.php                          # Configuration middlewares
 ├── database/

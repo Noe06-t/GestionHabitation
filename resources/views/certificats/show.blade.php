@@ -342,8 +342,8 @@
 
     <!-- Barre d'actions -->
     <div class="actions-bar">
-        <a href="{{ route('certificats.index') }}" class="btn btn-back">
-            <i class="bi bi-arrow-left"></i> Retour à la liste
+        <a href="{{ isset($isHabitantView) && $isHabitantView ? route('habitant.dashboard') : route('certificats.index') }}" class="btn btn-back">
+            <i class="bi bi-arrow-left"></i> Retour {{ isset($isHabitantView) && $isHabitantView ? 'au tableau de bord' : 'à la liste' }}
         </a>
         <button onclick="window.print()" class="btn btn-download">
             <i class="bi bi-download"></i> Télécharger PDF

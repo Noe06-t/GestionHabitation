@@ -31,6 +31,7 @@
                         <tr>
                             <th><i class="bi bi-calendar"></i> Date du certificat</th>
                             <th><i class="bi bi-person"></i> Habitant</th>
+                            <th><i class="bi bi-flag"></i> Statut</th>
                             <th class="text-center"><i class="bi bi-gear"></i> Actions</th>
                         </tr>
                     </thead>
@@ -39,6 +40,17 @@
                         <tr>
                             <td class="fw-semibold">{{ \Carbon\Carbon::parse($certificat->date_certificat)->format('d/m/Y') }}</td>
                             <td>{{ $certificat->habitant->nom }} {{ $certificat->habitant->prenom }}</td>
+                            <td>
+                                @if($certificat->statut === 'paye')
+                                    <span class="badge" style="background: #059669; color: white; padding: 0.4rem 0.8rem;">
+                                        <i class="bi bi-check-circle"></i> Payé
+                                    </span>
+                                @else
+                                    <span class="badge" style="background: #F59E0B; color: white; padding: 0.4rem 0.8rem;">
+                                        <i class="bi bi-clock"></i> En attente
+                                    </span>
+                                @endif
+                            </td>
                             <td class="text-center">
                                 <a href="{{ route('certificats.show', $certificat->id) }}" class="btn btn-info btn-sm me-1" title="Visualiser">
                                     <i class="bi bi-eye"></i> Voir

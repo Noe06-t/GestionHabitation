@@ -6,7 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
-class AdminMiddleware
+
+class HabitantMiddleware
 {
     /**
      * Handle an incoming request.
@@ -14,9 +15,11 @@ class AdminMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {   
-        if (!Auth::check()) {
-            abort(403, 'Accès interdit. Seuls les administrateurs peuvent accéder à cette page.');
+    {
+        // Vérifier que l'utilisateur est authentifié en tant qu'habitant
+        if (!Auth::guard('habitant')->check()) {
+            return redirect()->route('habitant.login')
+                ->with('error', 'Veuillez vous connecter pour accéder à cette page.');
         }
         return $next($request);
     }

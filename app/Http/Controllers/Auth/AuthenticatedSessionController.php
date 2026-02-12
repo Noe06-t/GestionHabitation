@@ -28,6 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Redirection vers le dashboard admin
         return redirect()->intended(route('habitants.index', absolute: false));
     }
 

@@ -41,10 +41,29 @@ class HabitantController extends Controller
      */
     public function store(Request $request)
     {
-        //Enregistrer les données dans la base de données
-        Habitant::create($request->all());
+        //Valider et enregistrer les données dans la base de données
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'required|email|unique:habitants,email',
+            'telephone' => 'required|string|unique:habitants,telephone',
+            'date_naissance' => 'required|date',
+            'quartier' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        Habitant::create([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'email' => $request->email,
+            'telephone' => $request->telephone,
+            'date_naissance' => $request->date_naissance,
+            'quartier' => $request->quartier,
+            'password' => bcrypt($request->password),
+        ]);
+
         return redirect()->route('habitants.index')
-                         ->with('success', 'Habitant créé avec succès.');
+                         ->with('success', 'Habitant créé avec succès. Il peut maintenant se connecter avec son email et le mot de passe fourni.');
     }
 
     /**
